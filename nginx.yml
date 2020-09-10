@@ -1,0 +1,9 @@
+---
+- host: web
+  tasks:
+    - name: Installs Ngix
+        apt:
+          pkg: nginx
+          state: present
+          update_cache: yes
+

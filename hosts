@@ -2,4 +2,5 @@
 host0.example.org ansible_ssh_host=192.168.33.10  ansible_ssh_user=root
 
 [all:vars]
+ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_private_key_file=/home/go0dwind/my_vgrant_prog_1/.vagrant/machines/{{ inventory_hostname }}/virtualbox/private_key
