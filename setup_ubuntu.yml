@@ -1,0 +1,25 @@
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+    - name: Install python
+      apt:
+        pkg: python3
+        state: present
+        update_cache: yes
+    - name: Installs Ngix
+      apt:
+        pkg: nginx
+        state: present
+      notify:
+         - Nginx start
+         - Nginx startup
+  handler:
+    - name: Nginx start
+      service:
+        name: nginx
+        state: started
+    - name: Nginx startup
+      service:
+        name: nginx
+        enabled: yes
