@@ -7,6 +7,7 @@
         pkg: python3
         state: present
         update_cache: yes
+
     - name: Installs Ngix
       apt:
         pkg: nginx
@@ -14,12 +15,61 @@
       notify:
          - Nginx start
          - Nginx startup
+
+    - name: Change default nginx config
+      copy:
+         src:  /files/config/nginx.conf
+         dest: /etc/nginx/nginx.conf
+         owner: root
+         mode: 0644
+
+    - name: Add static site
+      copy:
+          src: /files/site/index.html
+          dest: /var/www/html/index.html
+          owner: root
+          mode: 0644
+          register: site_not_found
+          ignore_errors: true
+
+    - name: Setup redirect on google
+      template:
+          src: /files/redirect/redirect_config.j2
+          dest: /etc/nginx/sites-available/{{domain_name}}
+          owner: root
+          mode: 0644
+      when: site_not_found is failed
+      notify: Nginx reload
+
+    - name: Remove default nginx site config
+      file:
+         name: /etc/nginx/sites-enabled/default
+         state: absent
+
+    - name: Setup site config
+      template:
+          src: /files/site/site_config.j2
+          dest: /etc/nginx/sites-available/{{domain_name}}
+          owner: root
+          mode: 0644
+
+    - name: Enable site
+      file:
+         src: /etc/nginx/sites-available/{{domain_name}}
+         dest: /etc/nginx/sites-enabled/{{domain_name}}
+         state: link
+      notify: Nginx reload
+
   handler:
     - name: Nginx start
       service:
         name: nginx
         state: started
+
     - name: Nginx startup
       service:
         name: nginx
         enabled: yes
+
+    - name: Nginx reload
+      command: nginx -s reload
