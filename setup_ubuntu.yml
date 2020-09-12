@@ -18,14 +18,15 @@
 
     - name: Change default nginx config
       copy:
-         src:  /files/config/nginx.conf
+         src: ./files/config/nginx.conf
          dest: /etc/nginx/nginx.conf
          owner: root
          mode: 0644
 
+
     - name: Add static site
       copy:
-          src: /files/site/index.html
+          src: ./files/site/index.html
           dest: /var/www/html/index.html
           owner: root
           mode: 0644
@@ -34,7 +35,7 @@
 
     - name: Setup redirect on google
       template:
-          src: /files/redirect/redirect_config.j2
+          src: ./files/redirect/redirect_config.j2
           dest: /etc/nginx/sites-available/{{domain_name}}
           owner: root
           mode: 0644
@@ -48,7 +49,7 @@
 
     - name: Setup site config
       template:
-          src: /files/site/site_config.j2
+          src: ./files/site/site_config.j2
           dest: /etc/nginx/sites-available/{{domain_name}}
           owner: root
           mode: 0644
