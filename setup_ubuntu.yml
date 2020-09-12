@@ -23,7 +23,6 @@
          owner: root
          mode: 0644
 
-
     - name: Add static site
       copy:
           src: ./files/site/index.html
