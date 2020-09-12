@@ -60,7 +60,7 @@
          state: link
       notify: Nginx reload
 
-  handler:
+  handlers:
     - name: Nginx start
       service:
         name: nginx
