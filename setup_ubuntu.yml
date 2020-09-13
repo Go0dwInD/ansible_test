@@ -42,9 +42,17 @@
       register: site_not_found
       ignore_errors: true
 
+    - name: Setup site config
+      template:
+          src: ./files/config/site_config.j2
+          dest: /etc/nginx/sites-available/{{domain_name}}
+          owner: root
+          mode: 0644
+      when: site_not_found is ok
+
     - name: Setup redirect on google
       template:
-          src: ./files/redirect/redirect_config.j2
+          src: ./files/config/redirect_config.j2
           dest: /etc/nginx/sites-available/{{domain_name}}
           owner: root
           mode: 0644
@@ -55,13 +63,6 @@
       file:
          name: /etc/nginx/sites-enabled/default
          state: absent
-
-    - name: Setup site config
-      template:
-          src: ./files/site/site_config.j2
-          dest: /etc/nginx/sites-available/{{domain_name}}
-          owner: root
-          mode: 0644
 
     - name: Enable site
       file:
