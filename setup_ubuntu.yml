@@ -16,6 +16,9 @@
          - Nginx start
          - Nginx startup
 
+    - name: Create Nginx user
+      command: useradd --no-create-home nginx
+
     - name: Change default nginx config
       copy:
          src: ./files/config/nginx.conf
