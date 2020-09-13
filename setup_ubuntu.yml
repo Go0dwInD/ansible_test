@@ -1,6 +1,7 @@
 ---
 - hosts: ubuntu
   become: yes
+  gather_facts: false
   tasks:
     - name: Install python
       apt:
@@ -23,7 +24,7 @@
 
     - name: Create Nginx user
       command: useradd --no-create-home nginx
-      when: site_not_found is failed
+      when: user_exist_status is failed
 
     - name: Change default nginx configan
       copy:
