@@ -30,7 +30,7 @@
           owner: root
           mode: 0644
           register: site_not_found
-          #ignore_errors: true
+      ignore_errors: true
 
     - name: Setup redirect on google
       template:
