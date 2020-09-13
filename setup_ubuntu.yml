@@ -16,11 +16,16 @@
          - Nginx start
          - Nginx startup
 
-    - name: Create Nginx user
-      command: useradd --no-create-home nginx
+    - name: Checking for the existence of the user nginx
+      shell: cat /etc/passwd | grep nginx
+      register: user_exist_status
       ignore_errors: true
 
-    - name: Change default nginx config
+    - name: Create Nginx user
+      command: useradd --no-create-home nginx
+      when: site_not_found is failed
+
+    - name: Change default nginx configan
       copy:
          src: ./files/config/nginx.conf
          dest: /etc/nginx/nginx.conf
