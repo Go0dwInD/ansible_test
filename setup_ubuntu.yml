@@ -48,7 +48,7 @@
           dest: /etc/nginx/sites-available/{{domain_name}}
           owner: root
           mode: 0644
-      when: site_not_found is ok
+      when: site_not_found is succeeded
 
     - name: Setup redirect on google
       template:
