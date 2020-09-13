@@ -33,6 +33,16 @@
          owner: root
          mode: 0644
 
+    - name: Remove default nginx site config
+      file:
+         name: /etc/nginx/sites-enabled/default
+         state: absent
+
+    - name: Remove domain nginx site config
+      file:
+         name: /etc/nginx/sites-enabled/{{domain_name}}
+         state: absent
+
     - name: Add static site
       copy:
           src: ./files/site/index.html
@@ -60,11 +70,6 @@
       notify:
          - Nginx reload
 
-    - name: Remove default nginx site config
-      file:
-         name: /etc/nginx/sites-enabled/default
-         state: absent
-
     - name: Enable site
       file:
          src: /etc/nginx/sites-available/{{domain_name}}
@@ -85,4 +90,6 @@
         enabled: yes
 
     - name: Nginx reload
-      command: nginx -s reload
+      service:
+        name: nginx
+        state: reloaded
