@@ -57,7 +57,8 @@
           owner: root
           mode: 0644
       when: site_not_found is failed
-      notify: Nginx reload
+      notify:
+         - Nginx reload
 
     - name: Remove default nginx site config
       file:
@@ -69,7 +70,8 @@
          src: /etc/nginx/sites-available/{{domain_name}}
          dest: /etc/nginx/sites-enabled/{{domain_name}}
          state: link
-      notify: Nginx reload
+      notify:
+         - Nginx reload
 
   handlers:
     - name: Nginx start
