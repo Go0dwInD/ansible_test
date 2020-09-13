@@ -69,7 +69,8 @@
          src: /etc/nginx/sites-available/{{domain_name}}
          dest: /etc/nginx/sites-enabled/{{domain_name}}
          state: link
-      notify: Nginx reload
+      notify:
+         - Nginx reload
 
   handlers:
     - name: Nginx start
