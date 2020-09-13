@@ -93,8 +93,13 @@
       apt_key:
        url: https://download.docker.com/linux/ubuntu/gpg
 
+    - name: Work out the distribution
+        command: lsb_release -sc
+        register: lsb_release
+
+
     - apt_repository:
-       repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+       repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{lsb_release.stdout}} stable
 
     - name: Install docker 19.03.12
       apt:
