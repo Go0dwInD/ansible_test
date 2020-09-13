@@ -29,7 +29,7 @@
           dest: /var/www/html/index.html
           owner: root
           mode: 0644
-          register: site_not_found
+      register: site_not_found
       ignore_errors: true
 
     - name: Setup redirect on google
