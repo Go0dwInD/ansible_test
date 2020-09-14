@@ -101,6 +101,14 @@
           - containerd.io
         update_cache: yes
 
+    - name: Create Dockerd daemon config
+      copy:
+        src: files/daemon_json.j2
+        dest: /etc/docker/daemon.json
+
+    - name: Reload Dockerd
+      shell:  kill -SIGHUP $(pidof dockerd)
+
   handlers:
     - name: Nginx start
       service:
