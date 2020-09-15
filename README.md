@@ -4,7 +4,7 @@
 ## Требования 
 Система Ubuntu 18.04, все необходимые пакеты будут установлены автоматически.
 
-## Основне переменные 
+## Основные переменные 
 hosts 
 ```yaml
 [ubuntu]
@@ -17,13 +17,13 @@ host0 ansible_ssh_host=192.168.33.10  ansible_ssh_user=vagrant ansible_ssh_port=
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_private_key_file=/home/go0dwind/my_vgrant_prog_1/.vagrant/machines/host0/virtualbox/private_key  
-# ansible_ssh_private_key_file Путь до вашего privet ключа в моём случае это ключ от vagrant
+# ansible_ssh_private_key_file Путь до вашего private_key ключа. В моём случае это ключ от vagrant
 domain_name=example.com  
 # domain_name Доменное имя вашей машины 
 ```
 ## Описание возможностей
-Данный playbook устанавлет Nginx в комплекте с статическим конентом file/index.html, если статический контент отсутствует
-то происходит редирект на сайт google.com, таже данный playbook устанавливает Docker последней стабильной версии(19.03.12) и настраивает его демон
+Данный playbook устанавлет Nginx в комплекте с статическим контентом file/index.html. Если статический контент отсутствует,
+то происходит редирект на сайт google.com, также данный playbook устанавливает Docker последней стабильной версии(19.03.12) и настраивает его демон
 
 deamon_config.json.j2
 ```yaml
