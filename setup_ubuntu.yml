@@ -100,14 +100,17 @@
           - docker-ce-cli=5:19.03.12~3-0~ubuntu-bionic
           - containerd.io
         update_cache: yes
+      notify:
+        - Docker start
+        - Docker startup
 
     - name: Create Dockerd daemon config
-      copy:
-        src: files/daemon_json.j2
-        dest: /etc/docker/daemon.json
+      template:
+          src: files/daemon_json.j2
+          dest: /etc/docker/daemon.json
+      notify:
+         - Docker restart 
 
-    - name: Reload Dockerd
-      shell:  kill -SIGHUP $(pidof dockerd)
 
   handlers:
     - name: Nginx start
@@ -123,4 +126,19 @@
     - name: Nginx reload
       service:
         name: nginx
-        state: reloaded
+        state: restarted
+
+    - name: Docker start
+      service:
+        name: docker
+        state: started
+
+    - name: Docker startup
+      service:
+        name: nginx
+        enabled: yes
+
+    - name: Docker restart
+      service:
+        name: docker
+        state: restarted

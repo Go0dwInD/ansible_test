@@ -1,0 +1,9 @@
+{
+  "storage-driver": "overlay2",
+  "log-opts": {
+    "max-size": "512m",
+    "max-file":"{{ ansible_mounts|json_query('[?mount == `/`].size_available')| first // 1024**2 // 512 // 2}}",
+    "labels": "somelabel",
+    "env": "os,customer"
+  }
+}
